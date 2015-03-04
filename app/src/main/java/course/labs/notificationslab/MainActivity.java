@@ -38,9 +38,10 @@ public class MainActivity extends Activity implements SelectionListener,
 	static final String TAG_FRIEND_RES_IDS = "friends";
 
 	public static final String TWEET_FILENAME = "tweets.txt";
-	public final static String[] FRIENDS_NAMES = { "taylorswift13",
-			"msrebeccablack", "ladygaga" };
-	public static final int IS_ALIVE = Activity.RESULT_FIRST_USER;
+	public static String[] FRIENDS_NAMES;
+//	public final static String[] FRIENDS_NAMES = { "taylorswift13",
+//			"msrebeccablack", "ladygaga" };
+    public static final int IS_ALIVE = Activity.RESULT_FIRST_USER;
 	public static final String DATA_REFRESHED_ACTION = "course.labs.notificationslabnew.DATA_REFRESHED";
 	private static final String TAG = "Lab-Notifications";
 
@@ -65,7 +66,9 @@ public class MainActivity extends Activity implements SelectionListener,
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		mFragmentManager = getFragmentManager();
+        FRIENDS_NAMES = getResources().getStringArray(R.array.friends_array);
+
+        mFragmentManager = getFragmentManager();
 
 		// Reset instance state on reconfiguration
 		if (null != savedInstanceState) {

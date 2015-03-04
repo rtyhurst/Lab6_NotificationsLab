@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="friends_array">
+        <item>@string/friend_talorswift</item>
+        <item>@string/friend_msrebeccablack</item>
+        <item>@string/friend_ladygaga</item>
+    </string-array>
+</resources>

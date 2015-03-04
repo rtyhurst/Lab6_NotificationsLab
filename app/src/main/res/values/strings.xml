@@ -11,4 +11,7 @@
     <string name="download_succes_string">Download completed successfully.</string>
     <string name="download_in_progress_string">Downloading Tweets from Network</string>
 	<string name="notification_sent_string">Notification Area Notification Sent</string>
+    <string name="friend_talorswift">taylorswift12</string>
+    <string name="friend_msrebeccablack">msrebeccablack</string>
+    <string name="friend_ladygaga">ladygaga</string>
 </resources>

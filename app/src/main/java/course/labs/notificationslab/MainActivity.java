@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.ExecutionException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,6 +20,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -60,8 +62,9 @@ public class MainActivity extends Activity implements SelectionListener,
 	private boolean mIsFresh;
 	private BroadcastReceiver mRefreshReceiver;
 	private static final long TWO_MIN = 2 * 60 * 1000;
+    private boolean mDownloadFinished = false;
 
-	@Override
+    @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
@@ -147,6 +150,19 @@ public class MainActivity extends Activity implements SelectionListener,
 				.add(mDownloaderFragment, TAG_DOWNLOADER_FRAGMENT).commit();
 	}
 
+    private void runDownloaderTask() {
+        // test to restart download task
+        if (mDownloaderFragment != null) {
+            DownloaderTaskFragment.DownloaderTask task = mDownloaderFragment.getmDownloaderTask();
+            if (mDownloadFinished){
+                if (task.getStatus() == AsyncTask.Status.PENDING) {
+                    task.execute(mDownloaderFragment.getResourceIDS());
+                }
+                mDownloadFinished = false;
+            }
+        }
+
+    }
 	// Register the BroadcastReceiver
 	@Override
 	protected void onResume() {
@@ -187,8 +203,11 @@ public class MainActivity extends Activity implements SelectionListener,
 		// Enable user interaction
 		mIsInteractionEnabled = true;
 		allowUserClicks();
+        mDownloadFinished = true;
 
-	};
+        runDownloaderTask();
+
+    };
 
 	// Enable user interaction with FriendFragment
 	private void allowUserClicks() {

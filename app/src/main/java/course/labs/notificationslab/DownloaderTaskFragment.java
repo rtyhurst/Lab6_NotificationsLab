@@ -30,11 +30,24 @@ public class DownloaderTaskFragment extends Fragment {
 	private DownloadFinishedListener mCallback;
 	private Context mContext;
 	private final int MY_NOTIFICATION_ID = 11151990;
+    private DownloaderTask mDownloaderTask;
 
 	@SuppressWarnings("unused")
 	private static final String TAG = "Lab-Notifications";
+    private Integer[] resourceIDS;
 
-	@Override
+    public Integer[] getResourceIDS() {
+        return resourceIDS;
+    }
+
+    public DownloaderTask getmDownloaderTask() {
+        if (mDownloaderTask != null) {
+            mDownloaderTask = new DownloaderTask();
+        }
+        return mDownloaderTask;
+    }
+
+    @Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
@@ -45,9 +58,10 @@ public class DownloaderTaskFragment extends Fragment {
         //  Retrieve arguments from DownloaderTaskFragment
         ArrayList<Integer> arrayList =
                 (ArrayList<Integer>) this.getArguments().get(MainActivity.TAG_FRIEND_RES_IDS);
-        Integer[] resourceIDS = (Integer[]) arrayList.toArray(new Integer[arrayList.size()]);
+        resourceIDS = (Integer[]) arrayList.toArray(new Integer[arrayList.size()]);
         //  Start the DownloaderTask
-        new DownloaderTask().execute(resourceIDS);
+        mDownloaderTask = new DownloaderTask();
+        mDownloaderTask.execute(resourceIDS);
 	}
 
 	// Assign current hosting Activity to mCallback
@@ -89,21 +103,11 @@ public class DownloaderTaskFragment extends Fragment {
         }
 
         @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
         protected void onPostExecute(String[] feeds) {
             if (feeds != null) {
                 if (isAdded()) mCallback.notifyDataRefreshed(feeds);
 //                mCallback.notifyDataRefreshed(feeds);
             }
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            super.onProgressUpdate(values);
         }
     }
 

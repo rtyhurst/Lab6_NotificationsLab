@@ -211,7 +211,7 @@ public class MainActivity extends Activity implements SelectionListener,
 
 	// Enable user interaction with FriendFragment
 	private void allowUserClicks() {
-		mFriendsFragment.setAllowUserClicks(true);
+        mFriendsFragment.setAllowUserClicks(true);
 	}
 
 	/*

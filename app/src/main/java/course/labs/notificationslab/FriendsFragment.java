@@ -39,19 +39,21 @@ public class FriendsFragment extends ListFragment {
 		super.onActivityCreated(savedInstanceState);
 		
 		// Enable user interaction only if data is available
-		setAllowUserClicks(mCallback.canAllowUserClicks());
-		
+        setAllowUserClicks(mCallback.canAllowUserClicks());
+
 	}
 
 	// Enable/disable user interaction 
 	void setAllowUserClicks(boolean allowUserInteraction) {
-		getListView().setEnabled(allowUserInteraction);
-		if (allowUserInteraction) {
-			getListView().setBackgroundColor(Color.WHITE);
-		} else {
-			getListView().setBackgroundColor(Color.DKGRAY);
-		}
-	}
+        if (isAdded()) {
+            getListView().setEnabled(allowUserInteraction);
+            if (allowUserInteraction) {
+                getListView().setBackgroundColor(Color.WHITE);
+            } else {
+                getListView().setBackgroundColor(Color.DKGRAY);
+            }
+        }
+    }
 
 	@Override
 	public void onListItemClick(ListView l, View view, int position, long id) {
